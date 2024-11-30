@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Números Primos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .number-container {
+            font-size: 3em;
+            margin: 20px;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 10px;
+            width: 200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="number-container" id="number-display">
+        2
+    </div>
+
+    <script>
+        let primeNumbers = [2]; // Comenzamos con el primer número primo
+        let currentIndex = 0;
+
+        // Función para comprobar si un número es primo
+        function isPrime(num) {
+            if (num < 2) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        // Función para obtener el siguiente número primo
+        function getNextPrime() {
+            let nextNum = primeNumbers[primeNumbers.length - 1] + 1;
+            while (!isPrime(nextNum)) {
+                nextNum++;
+            }
+            return nextNum;
+        }
+
+        // Actualizar la pantalla con el número primo actual
+        function updateDisplay() {
+            document.getElementById('number-display').textContent = primeNumbers[currentIndex];
+        }
+
+        // Manejar el clic izquierdo
+        document.body.addEventListener('click', function(event) {
+            if (event.button === 0) {  // Clic izquierdo
+                let nextPrime = getNextPrime();
+                primeNumbers.push(nextPrime);
+                currentIndex = primeNumbers.length - 1;
+                updateDisplay();
+            }
+        });
+
+        // Manejar el clic derecho
+        document.body.addEventListener('contextmenu', function(event) {
+            event.preventDefault();  // Evitar que se muestre el menú contextual
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateDisplay();
+            }
+        });
+    </script>
+
+</body>
+</html>
